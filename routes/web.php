@@ -12,5 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome2');
 });
+
+Route::get('/video', 'VideoController@index');
