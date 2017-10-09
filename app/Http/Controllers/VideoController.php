@@ -22,7 +22,7 @@ class VideoController extends Controller
     	// dd($format);
     	$temp;
     	if ($format == "wmv") {
-    		$temp = new \FFMpeg\Format\Video\WMV();
+    		$temp = new \FFMpeg\Format\Video\AVI();
     	}
     	// else if ($format == "mp4") {
     	// 	$temp = new \FFMpeg\Format\Video\WMV();
@@ -33,7 +33,7 @@ class VideoController extends Controller
     	// dd($temp);
     	// phpinfo();
     	// exit();
-    	set_time_limit(0);
+    	// set_time_limit(0);
     	
     	$file = $request->file('nama_video');
     	$nama = $time."_".$file->getClientOriginalName();
@@ -55,8 +55,7 @@ class VideoController extends Controller
     			->setAudioKiloBitrate($request->audiokilobitrate);
 			$video
     			->save($temp, $destinationConvert.'/'.$nama.'.'.$format);
-    		
-		}    		
+		}
     	// echo "kontol";
     	return redirect('/video')->with('success', 'Sukses Convert Video');
 
