@@ -15,4 +15,5 @@ Route::get('/', function () {
     return view('welcome2');
 });
 
-Route::get('/video', 'VideoController@index');
+Route::get('/video', 'VideoController@index')->name("video.index");
+Route::post('/video', 'VideoController@convert')->name("video.convert");

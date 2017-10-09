@@ -27,56 +27,58 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form" method="POST" role="form" action="{{ URL::to('convert_video') }}" onclick="getdate()">
-              <div class="box-body">
-                <div class="form-group"> 
-                  <label>Nomor Ticket</label> 
-                  <input class="form-control" placeholder="Nomor Ticket" name="NOMOR_TICKET" autocomplete="off"> 
-                </div> 
-                {{csrf_field()}} 
-                <div class="form-group"> 
-                  <label>Nama Requester</label> 
-                  <input class="form-control" placeholder="Nama Requester" name="NAMA_REQUESTER"> 
-                </div> 
-                {{csrf_field()}}
-                <div class="form-group">
-                  <label>Bagian</label>
-                  <input class="form-control" placeholder="Nama Bagian" name="BAGIAN">
-                </div>
-                {{csrf_field()}}
-                <div class="form-group">
-                  <label>Divisi</label>
-                  <input class="form-control" placeholder="Nama Divisi" name="DIVISI">
-                </div>
-                {{csrf_field()}}
-                <div class="form-group">
-                  <label>Barang yang Dibutuhkan</label>
-                  <input class="form-control" placeholder="Nama Barang" name="BARANG_PERMINTAAN">
-                </div>
-                {{csrf_field()}}
-                <div class="textarea-group">
-                  <label>Deskripsi</label>
-                  <input class="form-control" placeholder="Deskripsi Barang" name="DESKRIPSI">
-                </div>
-                {{csrf_field()}}
-                <div class="form-group">
-                <label>Date:</label>
+            <form role="form" enctype="multipart/form-data" method="POST" role="form" action="{{ route("video.convert") }}" onclick="getdate()">
 
-                <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input type="date" class="form-control pull-right" id="datepicker" name="TGL_PERMINTAAN">
+                <div class="box-body">
+                	{{csrf_field()}} 
+                	<div class="form-group"> 
+	                  <label>Upload Video</label> 
+	                  <input type="file" name="nama_video" required=""> 
+                	</div>               
+
+                <div class="form-group"> 
+                  <label>Pilih Format</label> 
+                  
+	              <select class="form-control" name="format_video">
+	              	<option disabled selected value><b>-- Pilih Menu Dibawah --</b></option>
+	              	<option value="wmv">WMV</option>
+	              	<option value="mp4">MP4</option>
+	              	<option value="avi">AVI</option>
+	              	<option value="webm">WEBM</option>
+
+	              </select>
                 </div>
-                <!-- /.input group -->
-              </div>
-                {{csrf_field()}}
-                <div class="form-group" hidden="">
-                  <label>Tanggal Deadline</label>
-                  <input id="datedead" class="form-control" placeholder="" name="TGL_DEADLINE" readonly>
+
+                <div class="form-group">
+                  <label>Width Video</label>
+                  <input class="form-control" placeholder="Width" name="width" required="">
                 </div>
-                {{csrf_field()}}
-              </div>
+
+                <div class="form-group">
+                  <label>Height Video</label>
+                  <input class="form-control" placeholder="Height" name="height" required="">
+                </div>
+
+                <div class="form-group">
+                  <label>BitRate Video</label>
+                  <input class="form-control" placeholder="BitRate" name="bitrate" required="">
+                </div>
+
+                <div class="form-group">
+                  <label>Audio Channel Video</label>
+                  <input class="form-control" placeholder="Audio Channel" name="audiochannel" required="">
+                </div>
+
+                <div class="form-group">
+                  <label>Audio Kilo BitRate</label>
+                  <input class="form-control" placeholder="Audio Kilo BitRate" name="audiokilobitrate" required="">
+                </div>
+
+            </div>
+                
+
+
+                
               <!-- /.box-body -->
 
               <div class="box-footer">
@@ -102,33 +104,4 @@
 <script src="../../plugins/daterangepicker/daterangepicker.js"></script>
 <!-- bootstrap datepicker -->
 <script src="../../plugins/datepicker/bootstrap-datepicker.js"></script>
-<script type="text/javascript">
-function getdate() {
-  var tt = document.getElementById('datepicker').value;
-
-  var date = new Date(tt);
-  var newdate = new Date(date);
-  var deadline = {{ $totaldeadline }}
-  newdate.setDate(newdate.getDate() + parseInt(deadline));
-
-  var dd = newdate.getDate();
-  var mm = newdate.getMonth() + 1;
-  var y = newdate.getFullYear();
-  console.log(dd)
-  console.log(mm)
-  console.log(y)
-
-  var FormattedDate = y + '-' + mm + '-' + dd;
-    document.getElementById('datedead').value = FormattedDate;
-}
-$(function () {
-      //Date picker
-      $('#datepicker').datepicker({
-        format: 'yyyy-mm-dd',
-        changeMonth: true,
-        changeYear: true,
-        autoclose: true
-      });
-});
-</script>
 @endsection
