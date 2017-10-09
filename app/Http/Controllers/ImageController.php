@@ -12,7 +12,7 @@ class ImageController extends Controller
 
     public function convert(Request $request) {
     	// dd($request->all());
-    	$time = date("now");
+    	$time = time("now");
 
     	$file = $request->file('nama_image');
 
@@ -25,10 +25,10 @@ class ImageController extends Controller
     	$destinationConvert = 'uploads/convert';
 
     	if ($file->move($destinationPath,$nama)) {
-    		exec('ffmpeg -i /home/fourirakbar/Pictures/'.$take.' -vf scale='.$request->width.':'.$request->height.' /home/fourirakbar/Documents/jarmul/multimedia_converter/public/uploads/convert/'.$takes[0].'.'.$request->format_image,$output, $status);
+    		exec('ffmpeg -i /home/fourirakbar/Pictures/'.$take.' -vf scale='.$request->width.':'.$request->height.' /home/fourirakbar/Documents/jarmul/multimedia_converter/public/uploads/convert/'.$time."_".$takes[0].'.'.$request->format_image,$output, $status);
 
     		
-
+    		dd($status);
     		// var_dump($status);
     		// print_r($output);
     		// echo "masuk bos";

@@ -26,16 +26,16 @@ class AudioController extends Controller
     		$ffmpeg = \FFMpeg\FFMpeg::create();
     		$audio = $ffmpeg->open($destinationPath."/".$nama);
 
-    		$format = new FFMpeg\Format\Audio\Flac();
+    		$format = new FFMpeg\Format\Audio\WAV();
     		$format->on('progress', function ($audio, $format, $percentage) {
 			    echo "$percentage % transcoded";
 			});
 
 			$format
 				->setAudioChannels(1)
-				->setAudioKiloBitrate(256);
+				->setAudioKiloBitrate(2);
 
-			$audio->save($format, 'track.flac');
+			$audio->save($format, 'track.wav');
     	}
 
     	return redirect('/audio')->with('success', 'Sukses Convert Audio');
