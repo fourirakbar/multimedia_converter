@@ -15,7 +15,7 @@
         <li class="header">MAIN NAVIGATION</li>
         <li><a href="/home"><i class="fa fa-home"></i> <span>Home</span></a></li>
         <li><a href="/image"><i class="fa fa-home"></i> <span>Image Converter</span></a></li>
-        <li><a href="/audio"><i class="fa fa-home"></i> <span>Audio Converter</span></a></li>
+        <li><a href="{{ route('audio.index') }}"><i class="fa fa-home"></i> <span>Audio Converter</span></a></li>
         <li><a href="/video"><i class="fa fa-home"></i> <span>Video Converter</span></a></li>
         
 
