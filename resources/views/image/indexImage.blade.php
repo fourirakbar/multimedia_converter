@@ -19,6 +19,16 @@
           <div class="box box-primary">
             @if ($message = Session::get('success'))
               <div class="alert alert-success">
+                <form action="{{ route('audio.download') }}" method="post">
+                  {{csrf_field()}}
+                  <input class="hidden" type="text" value="{{ $message['filename'] }}" name="file_download">
+                  <label>{{ $message['message'] }} </label> 
+                  <button class="btn btn-primary" type="submit">Download</button>
+                </form>
+              </div>
+            @endif
+            @if ($message = Session::get('error'))
+              <div class="alert alert-danger">
                 <p>{{ $message }}</p>
               </div>
             @endif
