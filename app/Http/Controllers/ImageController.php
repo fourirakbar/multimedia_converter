@@ -27,7 +27,7 @@ class ImageController extends Controller
     	if ($file->move($destinationPath,$nama)) { //get file in /uploads/original
 
     		//convert image with paramater that given by user
-    		exec('ffmpeg -i /home/fourirakbar/Pictures/'.$take.' -vf scale='.$request->width.':'.$request->height.' '.$path.'/uploads/convert/'.$nama_baru.' ; convert '.$path.'/uploads/convert/'.$nama_baru.' -colorspace '.$request->colorspace.' -depth '.$request->depth.' -quality '.$request->conversion.'% '.$path.'/uploads/convert/'.$nama_baru ,$output, $status);
+    		exec('ffmpeg -i /home/fourirakbar/Pictures/'.$take.' -vf scale='.$request->width.':'.$request->height.' '.$path.'/uploads/convert/'.$nama_baru.' ; convert '.$path.'/uploads/convert/'.$nama_baru.' -colorspace '.$request->colorspace.' -quality '.$request->conversion.'% '.$path.'/uploads/convert/'.$nama_baru ,$output, $status);
 
     		$millisecondsend = round(microtime(true) * 1000); //get time in ms after process convert
 			$hasil = (float)$millisecondsend - $milliseconds; //difference beetween get time in ms before process and git time in ms after process convert

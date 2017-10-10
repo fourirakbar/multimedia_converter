@@ -10,14 +10,14 @@ use FFMpeg;
 class VideoController extends Controller
 {
     public function index() {
-    	// phpinfo();
+    	
     	return view('video.indexVideo');
     }
 
 
     public function convert(Request $request) {
-    	// $inFile = $request->input;
-    	// $outFile = $request->output;
+    	
+      //get value from user input
     	$height = $request->height;
     	$width = $request->width;
     	$bitrate = $request->bitrate;
@@ -51,7 +51,8 @@ class VideoController extends Controller
 
 
     	if ($file->move($destinationPath,$nama)) { //get file in /uploads/original
-    		// dd($nama_baru);
+    		
+        //execute $execString
 	    	exec($execString,
 	    		$output, 
 	    		$status);
@@ -60,7 +61,7 @@ class VideoController extends Controller
 	    	$millisecondsend = round(microtime(true) * 1000); //get time in ms after process convert
 			$hasil = (float)$millisecondsend - $milliseconds; //difference beetween get time in ms before process and git time in ms after process convert 
 
-		//return to image.index with button download
+		
 
 			//if got error
 			if($status)
@@ -68,7 +69,7 @@ class VideoController extends Controller
 				return redirect(route('video.index'))->with('error', 'Gagal Convert Video');		
 			}
 			
-
+        //return to video.index with button download
     		return redirect(route('video.index'))->
 										with('success', array('message' => 'Sukses Convert Video Selama '.$hasil.' ms. Klik tombol Download untuk download file hasil', "filename" => $nama_baru));
 	    }
@@ -77,82 +78,6 @@ class VideoController extends Controller
 			return redirect(route('video.index'))->with('error', 'Gagal Convert Video');		
 
 	    }
-
-
-	   
-
-
-
-
-
-
-
-
-
-
-    	// dd($request->all());
-    	// $format = $request->format_video;
-    	// $time = date("now");
-    	// // dd($format);
-    	// $temp;
-    	
-    	// else if ($format == "mp4") {
-    	// 	$temp = new \FFMpeg\Format\Video\WMV();
-    	// }
-    	// else if ($format == "webm") {
-    	// 	$temp = new \FFMpeg\Format\Video\WebM();	
-    	// }
-    	// dd($temp);
-    	// phpinfo();
-    	// exit();
-    	// set_time_limit(0);
-    	
-   //  	$file = $request->file('nama_video');
-   //  	$nama = $time."_".$file->getClientOriginalName();
-   //  	$destinationPath = 'uploads/original';
-   //  	$destinationConvert = 'uploads/convert';
-
-   //  	if ($format == "wmv") {
-   //  		$temp = new \FFMpeg\Format\Video\wmv();
-
-   //  		if ($file->move($destinationPath,$nama)) {
-	  //   		$ffmpeg = \FFMpeg\FFMpeg::create();
-
-			// 	$video = $ffmpeg->open($destinationPath."/".$nama);
-				
-			// 	$video
-			// 	    ->filters()
-			// 	    ->resize(new FFMpeg\Coordinate\Dimension($request->width, $request->height))
-			// 	    ->synchronize();
-			// 	$temp
-	  //   			->setKiloBitrate($request->bitrate)
-	  //   			->setAudioChannels($request->audiochannel)
-	  //   			->setAudioKiloBitrate($request->audiokilobitrate);
-			// 	$video
-	  //   			->save($temp, $destinationConvert.'/'.$nama.'.'.$format);
-			// }
-   //  	}
-
-   //  	if ($format == "avi") {
-
-   //  		if ($file->move($destinationPath, $nama)) {
-   //  			$ffmpeg = \FFMpeg\FFMpeg::create();
-   //  			$formats = new FFMpeg\Format\Video\X264();
-   //  			$video = $ffmpeg->open($destinationPath."/".$nama);
-			// 	$formats->on('progress', function ($video, $formats, $percentage) {
-			// 	    echo "$percentage % transcoded";
-			// 	});
-
-			// 	$formats
-			// 	    ->setKiloBitrate(1000)
-			// 	    ->setAudioChannels(2)
-			// 	    ->setAudioKiloBitrate(256);
-
-			// 	$video->save($formats, 'video.avi');  			
-   //  		}
-   // //  	}
-
-   //  	return redirect('/video')->with('success', 'Sukses Convert Video');
 
 	}
 

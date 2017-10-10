@@ -51,7 +51,7 @@
                   
 	              <select class="form-control" name="formatVideo">
 	              	<option disabled selected value><b>-- Pilih Menu Dibawah --</b></option>
-	              	<option value="wmv">WMV</option>
+	              	
 	              	<option value="mp4">MP4</option>
 	              	<option value="avi">AVI</option>
 	              	<option value="webm">WEBM</option>
@@ -69,24 +69,42 @@
                   <input class="form-control" placeholder="Height" name="height" required="">
                 </div>
 
-                <!-- <div class="form-group">
-                  <label>BitRate Video</label>
-                  <input class="form-control" placeholder="BitRate" name="bitrate" required="">
-                </div> -->
+                <div class="form-group"> 
+                  <label>Bitrate Video</label> 
+                  
+                  <select class="form-control" name="bitrate">
+                    <option disabled selected value><b>-- Pilih Bitrate Dibawah --</b></option>
+                    <option value="56">56k</option>
+                    <option value="96">96k</option>
+                    <option value="128">128k</option>
+                    <option value="160">160k</option>
+                    <option value="192">192k</option>
+                    <option value="320">320k</option>
 
-                <div class="form-group">
-                  <label>Bitrate Video</label>
-                  <input class="form-control" placeholder="Bitrate" name="bitrate" required="">
+                </select>
                 </div>
 
-                <div class="form-group">
-                  <label>Audio Channel Video</label>
-                  <input class="form-control" placeholder="Audio Channel" name="audioChannel" required="">
+                <div class="form-group"> 
+                  <label>Audio Channel Video</label> 
+                  
+                  <select class="form-control" name="audioChannel">
+                    <option disabled selected value><b>-- Pilih Audi Channel Dibawah --</b></option>
+                    <option value="1">Mono</option>
+                    <option value="2">Stereo</option>
+
+                </select>
                 </div>
 
-                <div class="form-group">
-                  <label>Frame Rate Video</label>
-                  <input class="form-control" placeholder="Frame Rate" name="frameRate" required="">
+                <div class="form-group"> 
+                  <label>Frame Rate Video</label> 
+                  
+                  <select class="form-control" name="frameRate">
+                    <option disabled selected value><b>-- Pilih Frame Rate Dibawah --</b></option>
+                    <option value="25">25</option>
+                    <option value="30">30</option>
+                    <option value="60">60</option>
+
+                </select>
                 </div>
 
                 <!-- <div class="form-group">
@@ -125,3 +143,4 @@
 <!-- bootstrap datepicker -->
 <script src="../../plugins/datepicker/bootstrap-datepicker.js"></script>
 @endsection
+
