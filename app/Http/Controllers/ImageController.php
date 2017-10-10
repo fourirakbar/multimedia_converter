@@ -11,27 +11,21 @@ class ImageController extends Controller
     }
 
     public function convert(Request $request) {
-    	// dd($request->all());
-    	$time = time("now");
+    	$path = public_path();
+    	$time = date("now");
 
     	$file = $request->file('nama_image');
 
     	$take = $file->getClientOriginalName();
     	$takes = explode(".", $take);
-    	// dd($take);
-    	// dd($takes[0]);
+    	
     	$nama = $time."_".$file->getClientOriginalName();
+    	$nama_baru = $time."_".$takes[0].".".$request->format_image;
     	$destinationPath = 'uploads/original';
     	$destinationConvert = 'uploads/convert';
 
     	if ($file->move($destinationPath,$nama)) {
-    		exec('ffmpeg -i /home/fourirakbar/Pictures/'.$take.' -vf scale='.$request->width.':'.$request->height.' /home/fourirakbar/Documents/jarmul/multimedia_converter/public/uploads/convert/'.$time."_".$takes[0].'.'.$request->format_image,$output, $status);
-
-    		
-    		dd($status);
-    		// var_dump($status);
-    		// print_r($output);
-    		// echo "masuk bos";
+    		exec('ffmpeg -i /home/fourirakbar/Pictures/'.$take.' -vf scale='.$request->width.':'.$request->height.' '.$path.'/uploads/convert/'.$nama_baru.' ; convert '.$path.'/uploads/convert/'.$nama_baru.' -colorspace '.$request->colorspace.' -depth '.$request->depth.' '.$path.'/uploads/convert/'.$nama_baru ,$output, $status);
     	}
     	
 

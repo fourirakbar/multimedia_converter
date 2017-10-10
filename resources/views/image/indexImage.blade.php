@@ -69,12 +69,22 @@
                   <input class="form-control" placeholder="Height" name="height" required="">
                 </div>
 
-                <!-- <div class="form-group">
-                  <label>BitRate Video</label>
-                  <input class="form-control" placeholder="BitRate" name="bitrate" required="">
+                <div class="form-group">
+                  <label>Depth</label>
+                  <input class="form-control" placeholder="depth" name="depth" required="">
                 </div>
 
-                <div class="form-group">
+                <div class="form-group"> 
+                  <label>Colorspace</label> 
+                  
+                <select class="form-control" name="colorspace">
+                  <option disabled selected value><b>-- Pilih Menu Dibawah --</b></option>
+                  <option value="Gray">Grayscale</option>
+                  <option value="RGB">RGB</option>
+                </select>
+                </div>
+
+                <!-- <div class="form-group">
                   <label>Audio Channel Video</label>
                   <input class="form-control" placeholder="Audio Channel" name="audiochannel" required="">
                 </div>
@@ -82,8 +92,8 @@
                 <div class="form-group">
                   <label>Audio Kilo BitRate</label>
                   <input class="form-control" placeholder="Audio Kilo BitRate" name="audiokilobitrate" required="">
-                </div>
- -->
+                </div> -->
+
             </div>
                 
 
