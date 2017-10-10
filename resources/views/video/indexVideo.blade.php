@@ -19,6 +19,16 @@
           <div class="box box-primary">
             @if ($message = Session::get('success'))
               <div class="alert alert-success">
+                <form action="{{ route('audio.download') }}" method="post">
+                  {{csrf_field()}}
+                  <input class="hidden" type="text" value="{{ $message['filename'] }}" name="file_download">
+                  <label>{{ $message['message'] }} </label> 
+                  <button class="btn btn-primary" type="submit">Download</button>
+                </form>
+              </div>
+            @endif
+            @if ($message = Session::get('error'))
+              <div class="alert alert-danger">
                 <p>{{ $message }}</p>
               </div>
             @endif
@@ -39,7 +49,7 @@
                 <div class="form-group"> 
                   <label>Pilih Format</label> 
                   
-	              <select class="form-control" name="format_video">
+	              <select class="form-control" name="formatVideo">
 	              	<option disabled selected value><b>-- Pilih Menu Dibawah --</b></option>
 	              	<option value="wmv">WMV</option>
 	              	<option value="mp4">MP4</option>
@@ -59,20 +69,30 @@
                   <input class="form-control" placeholder="Height" name="height" required="">
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label>BitRate Video</label>
                   <input class="form-control" placeholder="BitRate" name="bitrate" required="">
+                </div> -->
+
+                <div class="form-group">
+                  <label>Bitrate Video</label>
+                  <input class="form-control" placeholder="Bitrate" name="bitrate" required="">
                 </div>
 
                 <div class="form-group">
                   <label>Audio Channel Video</label>
-                  <input class="form-control" placeholder="Audio Channel" name="audiochannel" required="">
+                  <input class="form-control" placeholder="Audio Channel" name="audioChannel" required="">
                 </div>
 
                 <div class="form-group">
+                  <label>Frame Rate Video</label>
+                  <input class="form-control" placeholder="Frame Rate" name="frameRate" required="">
+                </div>
+
+                <!-- <div class="form-group">
                   <label>Audio Kilo BitRate</label>
                   <input class="form-control" placeholder="Audio Kilo BitRate" name="audiokilobitrate" required="">
-                </div>
+                </div> -->
 
             </div>
                 
