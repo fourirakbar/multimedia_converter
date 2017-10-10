@@ -21,13 +21,7 @@ class VideoController extends Controller
     	$time = date("now");
     	// dd($format);
     	$temp;
-    	if ($format == "wmv") {
-    		$temp = new \FFMpeg\Format\Video\wmv();
-    	}
-
-    	if ($format == "mkv") {
-    		
-    	}
+    	
     	// else if ($format == "mp4") {
     	// 	$temp = new \FFMpeg\Format\Video\WMV();
     	// }
@@ -44,22 +38,47 @@ class VideoController extends Controller
     	$destinationPath = 'uploads/original';
     	$destinationConvert = 'uploads/convert';
 
-		if ($file->move($destinationPath,$nama)) {
-    		$ffmpeg = \FFMpeg\FFMpeg::create();
+    	if ($format == "wmv") {
+    		$temp = new \FFMpeg\Format\Video\wmv();
 
-			$video = $ffmpeg->open($destinationPath."/".$nama);
-			
-			$video
-			    ->filters()
-			    ->resize(new FFMpeg\Coordinate\Dimension($request->width, $request->height))
-			    ->synchronize();
-			$temp
-    			->setKiloBitrate($request->bitrate)
-    			->setAudioChannels($request->audiochannel)
-    			->setAudioKiloBitrate($request->audiokilobitrate);
-			$video
-    			->save($temp, $destinationConvert.'/'.$nama.'.'.$format);
-		}
+    		if ($file->move($destinationPath,$nama)) {
+	    		$ffmpeg = \FFMpeg\FFMpeg::create();
+
+				$video = $ffmpeg->open($destinationPath."/".$nama);
+				
+				$video
+				    ->filters()
+				    ->resize(new FFMpeg\Coordinate\Dimension($request->width, $request->height))
+				    ->synchronize();
+				$temp
+	    			->setKiloBitrate($request->bitrate)
+	    			->setAudioChannels($request->audiochannel)
+	    			->setAudioKiloBitrate($request->audiokilobitrate);
+				$video
+	    			->save($temp, $destinationConvert.'/'.$nama.'.'.$format);
+			}
+    	}
+
+    	if ($format == "avi") {
+
+    		if ($file->move($destinationPath, $nama)) {
+    			$ffmpeg = \FFMpeg\FFMpeg::create();
+    			$formats = new FFMpeg\Format\Video\X264();
+    			$video = $ffmpeg->open($destinationPath."/".$nama);
+				$formats->on('progress', function ($video, $formats, $percentage) {
+				    echo "$percentage % transcoded";
+				});
+
+				$formats
+				    ->setKiloBitrate(1000)
+				    ->setAudioChannels(2)
+				    ->setAudioKiloBitrate(256);
+
+				$video->save($formats, 'video.avi');  			
+    		}
+    	}
+
+		
     	// echo "kontol";
     	return redirect('/video')->with('success', 'Sukses Convert Video');
 
