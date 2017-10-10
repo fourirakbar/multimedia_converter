@@ -12,7 +12,7 @@ class ImageController extends Controller
 
     public function convert(Request $request) {
     	$path = public_path(); //define public path laravel
-    	$time = date("now"); //to show date
+    	$time = time("now"); //to show date
     	$milliseconds = round(microtime(true) * 1000); //get time in ms
     	$file = $request->file('nama_image'); //set nama_image to $file
 
@@ -28,13 +28,24 @@ class ImageController extends Controller
 
     		//convert image with paramater that given by user
     		exec('ffmpeg -i /home/fourirakbar/Pictures/'.$take.' -vf scale='.$request->width.':'.$request->height.' '.$path.'/uploads/convert/'.$nama_baru.' ; convert '.$path.'/uploads/convert/'.$nama_baru.' -colorspace '.$request->colorspace.' -depth '.$request->depth.' -quality '.$request->conversion.'% '.$path.'/uploads/convert/'.$nama_baru ,$output, $status);
-    	}
-    	$millisecondsend = round(microtime(true) * 1000); //get time in ms after process convert
-		$hasil = (float)$millisecondsend - $milliseconds; //difference beetween get time in ms before process and git time in ms after process convert 
+
+    		$millisecondsend = round(microtime(true) * 1000); //get time in ms after process convert
+			$hasil = (float)$millisecondsend - $milliseconds; //difference beetween get time in ms before process and git time in ms after process convert
+
+			if($status)
+			{
+				return redirect(route('image.index'))->with('error', 'Gagal Convert Image');		
+			}
 
 		//return to image.index with button download
-    	return redirect(route('image.index'))->
+    		return redirect(route('image.index'))->
 										with('success', array('message' => 'Sukses Convert Image Selama '.$hasil.' ms. Klik tombol Download untuk download file hasil', "filename" => $nama_baru));
+    	}
+    	else
+    	{
+    		return redirect(route('image.index'))->with('error', 'Gagal Convert Image');
+    	}
+    	
     }
 
     public function download(Request $request)
@@ -43,7 +54,7 @@ class ImageController extends Controller
 
 		if(!$request->file_download)
 		{
-			return redirect(route('audio.index'))->with('error', 'Gagal mengunduh Audio hasil convert');
+			return redirect(route('audio.index'))->with('error', 'Gagal mengunduh image hasil convert');
 		}
 
 		if(file_exists($target_file)) //if there is file, download it
@@ -59,6 +70,6 @@ class ImageController extends Controller
             readfile($target_file);
 		}
 
-		return redirect(route('audio.index'))->with('error', 'Gagal mengunduh Audio hasil convert');
+		return redirect(route('image.index'))->with('error', 'Gagal mengunduh image hasil convert');
 	}
 }

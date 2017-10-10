@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Route::get('/video', 'VideoController@index')->name("video.index");
 Route::post('/video', 'VideoController@convert')->name("video.convert");
+Route::post('/video/download', 'AudioController@download')->name("video.download");
+
 
 Route::get('/audio', 'AudioController@index')->name('audio.index');
 Route::post('/audio', 'AudioController@convert')->name("audio.convert");
@@ -24,3 +26,4 @@ Route::post('/audio/download', 'AudioController@download')->name("audio.download
 
 Route::get('/image', 'ImageController@index')->name('image.index');
 Route::post('/image', 'ImageController@convert')->name('image.convert');
+Route::post('/image/download', 'AudioController@download')->name("image.download");

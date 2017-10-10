@@ -19,7 +19,7 @@
           <div class="box box-primary">
             @if ($message = Session::get('success'))
               <div class="alert alert-success">
-                <form action="{{ route('audio.download') }}" method="post">
+                <form action="{{ route('image.download') }}" method="post">
                   {{csrf_field()}}
                   <input class="hidden" type="text" value="{{ $message['filename'] }}" name="file_download">
                   <label>{{ $message['message'] }} </label> 
@@ -86,7 +86,7 @@
 
                 <div class="form-group">
                   <label>Conversion Rate</label>
-                  <input class="form-control" placeholder="depth" name="conversion" required="">
+                  <input class="form-control" placeholder="conversion" name="conversion" required="">
                 </div>
 
                 <div class="form-group"> 

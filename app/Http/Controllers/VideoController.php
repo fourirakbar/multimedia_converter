@@ -26,7 +26,7 @@ class VideoController extends Controller
     	$frameRate = $request->frameRate;
 
     	$path = public_path(); //define public path laravel
-    	$time = date("now"); //to show date
+    	$time = time("now"); //to show date
     	$milliseconds = round(microtime(true) * 1000); //get time in ms
     	$file = $request->file('nama_video'); //set nama_image to $file
 
@@ -55,15 +55,31 @@ class VideoController extends Controller
 	    	exec($execString,
 	    		$output, 
 	    		$status);
+
+
+	    	$millisecondsend = round(microtime(true) * 1000); //get time in ms after process convert
+			$hasil = (float)$millisecondsend - $milliseconds; //difference beetween get time in ms before process and git time in ms after process convert 
+
+		//return to image.index with button download
+
+			//if got error
+			if($status)
+			{
+				return redirect(route('video.index'))->with('error', 'Gagal Convert Video');		
+			}
+			
+
+    		return redirect(route('video.index'))->
+										with('success', array('message' => 'Sukses Convert Video Selama '.$hasil.' ms. Klik tombol Download untuk download file hasil', "filename" => $nama_baru));
+	    }
+	    else
+	    {
+			return redirect(route('video.index'))->with('error', 'Gagal Convert Video');		
+
 	    }
 
 
-	    $millisecondsend = round(microtime(true) * 1000); //get time in ms after process convert
-		$hasil = (float)$millisecondsend - $milliseconds; //difference beetween get time in ms before process and git time in ms after process convert 
-
-		//return to image.index with button download
-    	return redirect(route('video.index'))->
-										with('success', array('message' => 'Sukses Convert Image Selama '.$hasil.' ms. Klik tombol Download untuk download file hasil', "filename" => $nama_baru));
+	   
 
 
 
@@ -134,9 +150,36 @@ class VideoController extends Controller
 
 			// 	$video->save($formats, 'video.avi');  			
    //  		}
-   //  	}
+   // //  	}
 
-    	return redirect('/video')->with('success', 'Sukses Convert Video');
+   //  	return redirect('/video')->with('success', 'Sukses Convert Video');
 
+	}
+
+
+
+	public function download(Request $request)
+	{
+		$target_file = public_path()."/uploads/convert/".$request->file_download; //get file in /uploads/convert
+
+		if(!$request->file_download)
+		{
+			return redirect(route('video.index'))->with('error', 'Gagal mengunduh video hasil convert');
+		}
+
+		if(file_exists($target_file)) //if there is file, download it
+		{
+			header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="'.explode('_',$request->file_download)[1].'"');
+            header('Cache-Control: private');
+            header('Content-Length: '.filesize($target_file));
+            header('Pragma: public');
+            ob_clean();
+            flush();
+            readfile($target_file);
+		}
+
+		return redirect(route('video.index'))->with('error', 'Gagal mengunduh video hasil convert');
 	}
 }
