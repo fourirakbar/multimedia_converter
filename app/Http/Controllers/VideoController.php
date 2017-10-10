@@ -22,7 +22,11 @@ class VideoController extends Controller
     	// dd($format);
     	$temp;
     	if ($format == "wmv") {
-    		$temp = new \FFMpeg\Format\Video\AVI();
+    		$temp = new \FFMpeg\Format\Video\wmv();
+    	}
+
+    	if ($format == "mkv") {
+    		
     	}
     	// else if ($format == "mp4") {
     	// 	$temp = new \FFMpeg\Format\Video\WMV();

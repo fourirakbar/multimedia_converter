@@ -53,7 +53,7 @@
                       <select required class="form-control" name="output_audio">
                         <option selected value><b>-- Pilih Format Output --</b></option>
                         <option value="mp3" >mp3</option>
-                        <option value="mp4" >mp4</option>
+                        <option value="flac" >flac</option>
                         <option value="ac3" >ac3</option>
                         <option value="aiff" >aiff</option>
                         <option value="ogg"  >ogg</option> 

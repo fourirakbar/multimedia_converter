@@ -17,6 +17,8 @@ class AudioController extends Controller
 	public function convert(Request $request) 
 	{
 		$time = time('now');
+		$milliseconds = round(microtime(true) * 1000);
+		// dd($milliseconds);
 		$bitrate = ($request->bitrate ? " -ab ".$request->bitrate : "");
 		$sample_rate = ($request->sample_rate ? " -ar ".$request->sample_rate : "");
 		$channel = ($request->channel ? " -ac ".$request->channel : "");
@@ -27,11 +29,15 @@ class AudioController extends Controller
 		$destinationConvert = 'uploads/convert';
 		$nama_output = $time.'_'.explode(".", $file->getClientOriginalName())[0].".".$request->output_audio;
 
-		$command = "/usr/local/bin/ffmpeg -i ".public_path()."/".$destinationPath."/".$nama.$bitrate." ".$sample_rate.$channel." -y ".public_path()."/".$destinationConvert."/".$nama_output;
+		$command = "ffmpeg -i ".public_path()."/".$destinationPath."/".$nama.$bitrate." ".$sample_rate.$channel." -y ".public_path()."/".$destinationConvert."/".$nama_output;
 		if($file->move($destinationPath,$nama))
 		{
+			// dd($command);
 			exec($command, $output, $status);
-			
+			$millisecondsend = round(microtime(true) * 1000);
+			$hasil = (float)$millisecondsend - $milliseconds;
+			// dd($hasil);
+
 			if($status)
 			{
 				return redirect(route('audio.index'))->with('error', 'Gagal Convert Audio');		
@@ -39,7 +45,7 @@ class AudioController extends Controller
 			
 
 			return redirect(route('audio.index'))->
-										with('success', array('message' => 'Sukses Convert Audio. Klik tombol Download untuk download file hasil', "filename" => $nama_output));
+										with('success', array('message' => 'Sukses Convert Audio Selama '.$hasil.' ms. Klik tombol Download untuk download file hasil', "filename" => $nama_output));
 		}
 		else
 		{

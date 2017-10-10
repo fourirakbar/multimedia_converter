@@ -84,6 +84,11 @@
                   <input class="form-control" placeholder="depth" name="depth" required="">
                 </div>
 
+                <div class="form-group">
+                  <label>Conversion Rate</label>
+                  <input class="form-control" placeholder="depth" name="conversion" required="">
+                </div>
+
                 <div class="form-group"> 
                   <label>Colorspace</label> 
                   

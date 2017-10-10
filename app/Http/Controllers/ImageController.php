@@ -13,7 +13,7 @@ class ImageController extends Controller
     public function convert(Request $request) {
     	$path = public_path();
     	$time = date("now");
-
+    	$milliseconds = round(microtime(true) * 1000);
     	$file = $request->file('nama_image');
 
     	$take = $file->getClientOriginalName();
@@ -25,11 +25,13 @@ class ImageController extends Controller
     	$destinationConvert = 'uploads/convert';
 
     	if ($file->move($destinationPath,$nama)) {
-    		exec('ffmpeg -i /home/fourirakbar/Pictures/'.$take.' -vf scale='.$request->width.':'.$request->height.' '.$path.'/uploads/convert/'.$nama_baru.' ; convert '.$path.'/uploads/convert/'.$nama_baru.' -colorspace '.$request->colorspace.' -depth '.$request->depth.' '.$path.'/uploads/convert/'.$nama_baru ,$output, $status);
+    		exec('ffmpeg -i /home/fourirakbar/Pictures/'.$take.' -vf scale='.$request->width.':'.$request->height.' '.$path.'/uploads/convert/'.$nama_baru.' ; convert '.$path.'/uploads/convert/'.$nama_baru.' -colorspace '.$request->colorspace.' -depth '.$request->depth.' -quality '.$request->conversion.'% '.$path.'/uploads/convert/'.$nama_baru ,$output, $status);
     	}
+    	$millisecondsend = round(microtime(true) * 1000);
+		$hasil = (float)$millisecondsend - $milliseconds;
 
     	return redirect(route('image.index'))->
-										with('success', array('message' => 'Sukses Convert Image. Klik tombol Download untuk download file hasil', "filename" => $nama_baru));
+										with('success', array('message' => 'Sukses Convert Image Selama '.$hasil.' ms. Klik tombol Download untuk download file hasil', "filename" => $nama_baru));
     }
 
     public function download(Request $request)
